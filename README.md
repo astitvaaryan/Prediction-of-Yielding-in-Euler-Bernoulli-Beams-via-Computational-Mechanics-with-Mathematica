@@ -1,0 +1,2 @@
+# Prediction-of-Yielding-in-Euler-Bernoulli-Beams-via-Computational-Mechanics-with-Mathematica
+Developed a computational model in Wolfram Mathematica to predict yielding in Euler-Bernoulli beams. Simulated deformation under various loads, analyzed stress distribution, and identified critical yielding points. Integrates solid mechanics principles with computational methods for accurate structural analysis
