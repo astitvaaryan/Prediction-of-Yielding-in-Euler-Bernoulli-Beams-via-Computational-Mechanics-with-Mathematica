@@ -1,0 +1,1340 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 12.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     59359,       1332]
+NotebookOptionsPosition[     58445,       1307]
+NotebookOutlinePosition[     58817,       1323]
+CellTagsIndexPosition[     58774,       1320]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"ClearAll", "[", "\"\<Global'*\>\"", "]"}], " ", ";"}], "\n", 
+ RowBox[{
+  RowBox[{
+   RowBox[{"SetDirectory", "[", 
+    RowBox[{"NotebookDirectory", "[", "]"}], "]"}], ";"}], "\n"}], "\n", 
+ RowBox[{"Manipulate", "[", "\n", " ", 
+  RowBox[{
+   RowBox[{"Module", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+      "L", ",", " ", "h", ",", " ", "b", ",", " ", "Izz", ",", " ", "P", ",", 
+       " ", "P1", ",", " ", "sx", ",", " ", "sy", ",", " ", "q", ",", " ", 
+       "q1", ",", " ", "qo", ",", " ", "V", ",", " ", "M", ",", " ", "bc", 
+       ",", " ", "R1", ",", " ", "R2", ",", " ", "data", ",", " ", 
+       "trianglePos", ",", " ", "trianglePos1", ",", " ", "support", ",", " ",
+        "support1", ",", " ", "beam", ",", " ", "pointLoad1", ",", " ", 
+       "pointLoad2", ",", "arrows", ",", " ", "beamGraphic", ",", " ", "solV",
+        ",", " ", "solvution", ",", " ", "solution"}], "}"}], ",", "\n", "  ", 
+     RowBox[{
+      RowBox[{"L", " ", "=", " ", "5.25"}], ";", "\n", "  ", 
+      RowBox[{"h", " ", "=", " ", "0.05"}], ";", "\n", "  ", 
+      RowBox[{"b", " ", "=", " ", "0.05"}], ";", "\n", "  ", 
+      RowBox[{"Izz", " ", "=", " ", 
+       RowBox[{"b", " ", 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"h", "^", "3"}], ")"}], "/", 
+         RowBox[{"(", "12", ")"}]}]}]}], ";", "\n", "  ", 
+      RowBox[{"P", " ", "=", " ", "c1"}], ";", "\n", "  ", 
+      RowBox[{"P1", " ", "=", " ", "c12"}], ";", "\n", "  ", 
+      RowBox[{
+       RowBox[{"q", "[", "x_", "]"}], " ", ":=", " ", 
+       RowBox[{"Piecewise", "[", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"0", ",", " ", 
+            RowBox[{"0", " ", "<=", " ", "x", " ", "<", " ", "1.5"}]}], "}"}],
+           ",", " ", 
+          RowBox[{"{", 
+           RowBox[{"0", ",", " ", 
+            RowBox[{"1.5", " ", "<=", " ", "x", " ", "<", " ", "3.75"}]}], 
+           "}"}], ",", " ", 
+          RowBox[{"{", 
+           RowBox[{"0", ",", " ", 
+            RowBox[{"3.75", " ", "<=", " ", "x", " ", "<", " ", "5.25"}]}], 
+           "}"}]}], "}"}], "]"}]}], ";", "\n", "  ", 
+      RowBox[{
+       RowBox[{"q1", "[", "x_", "]"}], " ", ":=", " ", 
+       RowBox[{
+        RowBox[{"P", "*", 
+         RowBox[{"DiracDelta", "[", 
+          RowBox[{"x", " ", "-", " ", "c7"}], "]"}]}], "+", " ", 
+        RowBox[{"P1", "*", 
+         RowBox[{"DiracDelta", "[", 
+          RowBox[{"x", " ", "-", " ", "c11"}], "]"}]}]}]}], ";", "\n", "  ", 
+      RowBox[{
+       RowBox[{"qo", "[", "x_", "]"}], " ", ":=", " ", 
+       RowBox[{
+        RowBox[{"q", "[", "x", "]"}], " ", "-", " ", 
+        RowBox[{"R1", "*", 
+         RowBox[{"DiracDelta", "[", 
+          RowBox[{"x", " ", "-", " ", "c4"}], "]"}]}], " ", "-", " ", 
+        RowBox[{"R2", "*", 
+         RowBox[{"DiracDelta", "[", 
+          RowBox[{"x", " ", "-", " ", "c5"}], "]"}]}], " ", "+", " ", 
+        RowBox[{"q1", "[", "x", "]"}]}]}], ";", "\n", "  ", "\n", "  ", 
+      RowBox[{"data", " ", "=", " ", 
+       RowBox[{"Table", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"x", ",", " ", 
+           RowBox[{"q", "[", "x", "]"}]}], "}"}], ",", " ", 
+         RowBox[{"{", 
+          RowBox[{"x", ",", " ", "0", ",", " ", "L", ",", " ", "0.1"}], 
+          "}"}]}], "]"}]}], ";", "\n", "  ", 
+      RowBox[{"data", " ", "=", " ", 
+       RowBox[{"Join", "[", 
+        RowBox[{"data", ",", " ", 
+         RowBox[{"{", 
+          RowBox[{"{", 
+           RowBox[{"c7", ",", " ", "P"}], "}"}], "}"}]}], "]"}]}], ";", "\n", 
+      "  ", 
+      RowBox[{"data", " ", "=", " ", 
+       RowBox[{"Join", "[", 
+        RowBox[{"data", ",", " ", 
+         RowBox[{"{", 
+          RowBox[{"{", 
+           RowBox[{"c11", ",", " ", "P1"}], "}"}], "}"}]}], "]"}]}], ";", 
+      "\n", "  ", 
+      RowBox[{"trianglePos", " ", "=", " ", "c4"}], ";", "\n", "  ", 
+      RowBox[{"trianglePos1", " ", "=", " ", "c5"}], ";", "\n", "  ", 
+      RowBox[{"support", " ", "=", " ", 
+       RowBox[{"Polygon", "[", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"trianglePos", " ", "-", " ", "0.1"}], ",", " ", 
+            RowBox[{"-", "0.2"}]}], "}"}], ",", " ", 
+          RowBox[{"{", 
+           RowBox[{"trianglePos", ",", " ", "0"}], "}"}], ",", " ", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"trianglePos", " ", "+", " ", "0.1"}], ",", " ", 
+            RowBox[{"-", "0.2"}]}], "}"}]}], "}"}], "]"}]}], ";", "\n", "  ", 
+      RowBox[{"support1", " ", "=", " ", 
+       RowBox[{"Polygon", "[", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"trianglePos1", " ", "-", " ", "0.1"}], ",", " ", 
+            RowBox[{"-", "0.2"}]}], "}"}], ",", " ", 
+          RowBox[{"{", 
+           RowBox[{"trianglePos1", ",", " ", "0"}], "}"}], ",", " ", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"trianglePos1", " ", "+", " ", "0.1"}], ",", " ", 
+            RowBox[{"-", "0.2"}]}], "}"}]}], "}"}], "]"}]}], ";", "\n", "  ", 
+      RowBox[{"beam", " ", "=", " ", 
+       RowBox[{"Line", "[", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"0", ",", " ", "0"}], "}"}], ",", " ", 
+          RowBox[{"{", 
+           RowBox[{"L", ",", " ", "0"}], "}"}]}], "}"}], "]"}]}], ";", "\n", 
+      "  ", 
+      RowBox[{"pointLoad1", " ", "=", " ", 
+       RowBox[{"Arrow", "[", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"c7", ",", " ", "c9"}], "}"}], ",", " ", 
+          RowBox[{"{", 
+           RowBox[{"c7", ",", " ", "0"}], "}"}]}], "}"}], "]"}]}], ";", "\n", 
+      "  ", 
+      RowBox[{"pointLoad2", " ", "=", " ", 
+       RowBox[{"Arrow", "[", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"c11", ",", " ", "c13"}], "}"}], ",", " ", 
+          RowBox[{"{", 
+           RowBox[{"c11", ",", " ", "0"}], "}"}]}], "}"}], "]"}]}], ";", "\n",
+       "  ", 
+      RowBox[{"arrows", " ", "=", " ", 
+       RowBox[{"Table", "[", 
+        RowBox[{
+         RowBox[{"Arrow", "[", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{"x", ",", " ", 
+              RowBox[{"c10", "*", 
+               RowBox[{
+                RowBox[{"q", "[", "x", "]"}], "/", "1000"}]}]}], "}"}], ",", 
+            " ", 
+            RowBox[{"{", 
+             RowBox[{"x", ",", " ", "0"}], "}"}]}], "}"}], "]"}], ",", " ", 
+         RowBox[{"{", 
+          RowBox[{"x", ",", " ", "c8", ",", " ", "L", ",", " ", "0.25"}], 
+          "}"}]}], "]"}]}], ";", "\n", "  ", 
+      RowBox[{"beamGraphic", " ", "=", " ", 
+       RowBox[{"Graphics", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+          "support", ",", " ", "support1", ",", " ", "beam", ",", " ", 
+           "pointLoad1", ",", " ", "pointLoad2", ",", "arrows"}], "}"}], ",", 
+         " ", 
+         RowBox[{"ImageSize", " ", "->", " ", 
+          RowBox[{"{", 
+           RowBox[{"800", ",", " ", "400"}], "}"}]}]}], "]"}]}], ";", "\n", 
+      "  ", "\n", "  ", 
+      RowBox[{"W", " ", "=", " ", 
+       RowBox[{"Integrate", "[", 
+        RowBox[{
+         RowBox[{"q", "[", "x", "]"}], ",", " ", 
+         RowBox[{"{", 
+          RowBox[{"x", ",", " ", "0", ",", " ", "L"}], "}"}]}], "]"}]}], ";", 
+      "\n", "  ", 
+      RowBox[{"eq1", " ", "=", " ", 
+       RowBox[{
+        RowBox[{"R1", " ", "+", " ", "R2"}], " ", "==", " ", 
+        RowBox[{"W", " ", "+", " ", "P", " ", "+", " ", "P1"}]}]}], ";", "\n",
+       "  ", 
+      RowBox[{"eq2", " ", "=", " ", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"c4", "*", "R1"}], " ", "+", " ", 
+         RowBox[{"c5", "*", "R2"}]}], " ", "==", " ", 
+        RowBox[{
+         RowBox[{"Integrate", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"q", "[", "x", "]"}], "*", "x"}], ",", " ", 
+           RowBox[{"{", 
+            RowBox[{"x", ",", " ", "0", ",", " ", "L"}], "}"}]}], "]"}], " ", 
+         "+", " ", 
+         RowBox[{"Integrate", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"q1", "[", "x", "]"}], "*", "x"}], ",", " ", 
+           RowBox[{"{", 
+            RowBox[{"x", ",", " ", "0", ",", " ", "L"}], "}"}]}], "]"}]}]}]}],
+       ";", "\n", "  ", 
+      RowBox[{"solution", " ", "=", " ", 
+       RowBox[{"Solve", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{"eq1", ",", " ", "eq2"}], "}"}], ",", " ", 
+         RowBox[{"{", 
+          RowBox[{"R1", ",", " ", "R2"}], "}"}]}], "]"}]}], ";", "\n", "  ", 
+      RowBox[{"R1", " ", "=", " ", 
+       RowBox[{"R1", " ", "/.", " ", 
+        RowBox[{"solution", "[", 
+         RowBox[{"[", "1", "]"}], "]"}]}]}], ";", "\n", "  ", 
+      RowBox[{"R2", " ", "=", " ", 
+       RowBox[{"R2", " ", "/.", " ", 
+        RowBox[{"solution", "[", 
+         RowBox[{"[", "1", "]"}], "]"}]}]}], ";", "\n", "  ", 
+      RowBox[{"eq3", " ", "=", " ", 
+       RowBox[{"D", "[", 
+        RowBox[{
+         RowBox[{"V", "[", "x", "]"}], ",", " ", "x"}], "]"}]}], ";", "\n", 
+      "  ", 
+      RowBox[{"eq4", " ", "=", " ", 
+       RowBox[{"D", "[", 
+        RowBox[{
+         RowBox[{"M", "[", "x", "]"}], ",", " ", "x"}], "]"}]}], ";", "\n", 
+      "  ", "\n", "  ", 
+      RowBox[{"If", "[", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"c4", " ", "==", " ", "0"}], " ", "&&", " ", 
+         RowBox[{"c7", " ", "==", " ", "0"}]}], ",", "\n", "    ", 
+        RowBox[{"bc", " ", "=", " ", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"V", "[", "0", "]"}], " ", "==", " ", "0"}], ",", " ", 
+           RowBox[{
+            RowBox[{"M", "[", "0", "]"}], " ", "==", " ", "0"}]}], "}"}]}], 
+        ",", "\n", "    ", 
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{
+           RowBox[{"c4", " ", "!=", " ", "0"}], " ", "&&", " ", 
+           RowBox[{"c7", " ", "==", " ", "0"}]}], ",", "\n", "        ", 
+          RowBox[{"bc", " ", "=", " ", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"V", "[", "0", "]"}], " ", "==", " ", "0"}], ",", " ", 
+             RowBox[{
+              RowBox[{"M", "[", "0", "]"}], " ", "==", " ", "0"}]}], "}"}]}], 
+          ",", "\n", "        ", 
+          RowBox[{"If", "[", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"c4", " ", "!=", " ", "0"}], " ", "&&", " ", 
+             RowBox[{"c7", " ", "!=", " ", "0"}]}], ",", "\n", "            ", 
+            RowBox[{"bc", " ", "=", " ", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{
+                RowBox[{"V", "[", "0", "]"}], " ", "==", " ", "0"}], ",", " ", 
+               RowBox[{
+                RowBox[{"M", "[", "0", "]"}], " ", "==", " ", "0"}]}], 
+              "}"}]}], ",", "\n", "            ", 
+            RowBox[{"(*", " ", 
+             RowBox[{
+             "Default", " ", "case", " ", "if", " ", "none", " ", "of", " ", 
+              "the", " ", "above", " ", "conditions", " ", "are", " ", 
+              "met"}], " ", "*)"}], "\n", "            ", 
+            RowBox[{"bc", " ", "=", " ", 
+             RowBox[{"{", 
+              RowBox[{
+               RowBox[{
+                RowBox[{"V", "[", "0", "]"}], " ", "==", " ", 
+                RowBox[{"-", "R1"}]}], ",", " ", 
+               RowBox[{
+                RowBox[{"M", "[", "0", "]"}], " ", "==", " ", "0"}]}], 
+              "}"}]}]}], "\n", "        ", "]"}]}], "\n", "    ", "]"}]}], 
+       "\n", "]"}], ";", "\n", "\n", "  ", "\n", "  ", 
+      RowBox[{"solV", " ", "=", " ", 
+       RowBox[{"NDSolve", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"eq3", "==", 
+            RowBox[{"qo", "[", "x", "]"}]}], ",", " ", 
+           RowBox[{"eq4", "==", 
+            RowBox[{"-", 
+             RowBox[{"V", "[", "x", "]"}]}]}], ",", " ", "bc"}], "}"}], ",", 
+         " ", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"V", "[", "x", "]"}], ",", " ", 
+           RowBox[{"M", "[", "x", "]"}]}], "}"}], ",", " ", 
+         RowBox[{"{", 
+          RowBox[{"x", ",", " ", "0", ",", " ", "L"}], "}"}]}], "]"}]}], ";", 
+      "\n", "    ", "\n", "  ", 
+      RowBox[{"(*", 
+       RowBox[{"Define", " ", "the", " ", "yield", " ", "functions"}], "*)"}],
+       "\n", "  ", 
+      RowBox[{
+       RowBox[{"vonMises", "[", 
+        RowBox[{"s1_", ",", "s2_", ",", "Y_"}], "]"}], ":=", 
+       RowBox[{
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"s1", "-", "s2"}], ")"}], "^", "2"}], "+", 
+        RowBox[{"s2", "^", "2"}], "+", 
+        RowBox[{"s1", "^", "2"}], "-", 
+        RowBox[{"2", "*", 
+         RowBox[{"Y", "^", "2"}]}]}]}], ";", "\n", "  ", 
+      RowBox[{
+       RowBox[{"Tresca", "[", 
+        RowBox[{"s1_", ",", "s2_", ",", "Y_"}], "]"}], ":=", 
+       RowBox[{
+        RowBox[{"Max", "[", 
+         RowBox[{
+          RowBox[{"Abs", "[", 
+           RowBox[{"s1", "-", "s2"}], "]"}], ",", 
+          RowBox[{"Abs", "[", "s2", "]"}], ",", 
+          RowBox[{"Abs", "[", "s1", "]"}]}], "]"}], "-", "Y"}]}], ";", "\n", 
+      "\[IndentingNewLine]", "  ", 
+      RowBox[{"(*", 
+       RowBox[{"Set", " ", "the", " ", "yield", " ", "strength", " ", "Y"}], 
+       "*)"}], "\[IndentingNewLine]", "   ", 
+      RowBox[{"Y", "=", "220"}], " ", 
+      RowBox[{"(*", "MPa", "*)"}], ";", "\n", "\[IndentingNewLine]", "  ", 
+      RowBox[{"(*", 
+       RowBox[{
+       "Determine", " ", "the", " ", "appropriate", " ", "plot", " ", "range",
+         " ", "based", " ", "on", " ", "Y"}], "*)"}], "\[IndentingNewLine]", 
+      "  ", 
+      RowBox[{"plotRange", "=", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"-", "2"}], "*", "Y"}], ",", 
+           RowBox[{"2", "*", "Y"}]}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"-", "2"}], "*", "Y"}], ",", 
+           RowBox[{"2", "*", "Y"}]}], "}"}]}], "}"}]}], ";", 
+      "\[IndentingNewLine]", "\n", "  ", 
+      RowBox[{"(*", 
+       RowBox[{"Define", " ", "the", " ", "point", " ", 
+        RowBox[{"(", 
+         RowBox[{"sx", ",", "sy"}], ")"}]}], "*)"}], "\n", "  ", 
+      RowBox[{"sx", "=", 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"Maximize", "[", 
+           RowBox[{
+            RowBox[{"Abs", "[", 
+             RowBox[{
+              RowBox[{
+               RowBox[{"(", 
+                RowBox[{"h", "/", 
+                 RowBox[{"(", 
+                  RowBox[{"2", "*", "Izz"}], ")"}]}], ")"}], "*", 
+               RowBox[{"M", "[", "x", "]"}]}], "/.", 
+              RowBox[{"solV", "[", 
+               RowBox[{"[", "1", "]"}], "]"}]}], "]"}], ",", 
+            RowBox[{"{", 
+             RowBox[{"0", "<=", "x", "\[LessEqual]", "L"}], "}"}], ",", "x"}],
+            "]"}], "[", 
+          RowBox[{"[", "1", "]"}], "]"}], ")"}], "/", 
+        RowBox[{"10", "^", "6"}]}]}], ";", "\n", "  ", 
+      RowBox[{"sy", "=", "0"}], ";", " ", "\n", "  ", "\n", "  ", 
+      RowBox[{"GraphicsRow", "[", 
+       RowBox[{"{", 
+        RowBox[{"beamGraphic", ",", " ", 
+         RowBox[{"Column", "[", 
+          RowBox[{"{", 
+           RowBox[{
+           "\"\<R1->\>\"", ",", " ", "R1", ",", " ", "\"\<R2->\>\"", ",", " ",
+             "R2"}], "}"}], "]"}], ",", " ", "\n", "    ", 
+         RowBox[{"Plot", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"V", "[", "x", "]"}], "/.", 
+            RowBox[{"solV", "[", 
+             RowBox[{"[", "1", "]"}], "]"}]}], ",", " ", 
+           RowBox[{"{", 
+            RowBox[{"x", ",", " ", "0", ",", " ", "L"}], "}"}], ",", " ", 
+           RowBox[{
+           "PlotLabel", " ", "->", " ", "\"\<Shear Force Diagram\>\""}]}], 
+          "]"}], ",", " ", "\n", "    ", 
+         RowBox[{"Plot", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"M", "[", "x", "]"}], "/.", 
+            RowBox[{"solV", "[", 
+             RowBox[{"[", "1", "]"}], "]"}]}], ",", 
+           RowBox[{"{", 
+            RowBox[{"x", ",", "0", ",", "L"}], "}"}], ",", " ", 
+           RowBox[{
+           "PlotLabel", " ", "->", " ", "\"\<Bending Moment Diagram\>\""}]}], 
+          "]"}], ",", " ", "\n", "    ", 
+         RowBox[{"Plot", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{
+             RowBox[{"(", 
+              RowBox[{"h", "/", 
+               RowBox[{"(", 
+                RowBox[{"2", "*", "Izz"}], ")"}]}], ")"}], "*", 
+             RowBox[{"M", "[", "x", "]"}]}], "/.", 
+            RowBox[{"solV", "[", 
+             RowBox[{"[", "1", "]"}], "]"}]}], ",", 
+           RowBox[{"{", 
+            RowBox[{"x", ",", "0", ",", "L"}], "}"}], ",", " ", 
+           RowBox[{"PlotLabel", " ", "->", " ", "\"\<Stress Diagram\>\""}]}], 
+          "]"}], ",", "\n", "    ", 
+         RowBox[{"Column", "[", 
+          RowBox[{"{", 
+           RowBox[{
+           "\"\<Maximum Stress with the location on the beam->\>\"", ",", 
+            RowBox[{"Maximize", "[", 
+             RowBox[{
+              RowBox[{"Abs", "[", 
+               RowBox[{
+                RowBox[{
+                 RowBox[{"(", 
+                  RowBox[{"h", "/", 
+                   RowBox[{"(", 
+                    RowBox[{"2", "*", "Izz"}], ")"}]}], ")"}], "*", 
+                 RowBox[{"M", "[", "x", "]"}]}], "/.", 
+                RowBox[{"solV", "[", 
+                 RowBox[{"[", "1", "]"}], "]"}]}], "]"}], ",", 
+              RowBox[{"{", 
+               RowBox[{"0", "<=", "x", "\[LessEqual]", "L"}], "}"}], ",", 
+              "x"}], "]"}]}], "}"}], "]"}], ",", "\n", "    ", 
+         "\[IndentingNewLine]", "    ", 
+         RowBox[{"ContourPlot", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{
+             RowBox[{
+              RowBox[{"(", 
+               RowBox[{"s1", "-", "s2"}], ")"}], "^", "2"}], "+", 
+             RowBox[{"s2", "^", "2"}], "+", 
+             RowBox[{"s1", "^", "2"}]}], "\[Equal]", 
+            RowBox[{"2", "*", 
+             RowBox[{"Y", "^", "2"}]}]}], ",", 
+           RowBox[{"{", 
+            RowBox[{"s1", ",", 
+             RowBox[{
+              RowBox[{"-", "2"}], "*", "Y"}], ",", 
+             RowBox[{"2", "*", "Y"}]}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"s2", ",", 
+             RowBox[{
+              RowBox[{"-", "2"}], "*", "Y"}], ",", 
+             RowBox[{"2", "*", "Y"}]}], "}"}], ",", "\n", "    ", 
+           RowBox[{"ContourStyle", "\[Rule]", 
+            RowBox[{"{", 
+             RowBox[{"Red", ",", "Thick"}], "}"}]}], ",", 
+           RowBox[{"FrameLabel", "\[Rule]", 
+            RowBox[{"{", 
+             RowBox[{"\"\<s1 (in MPa)\>\"", ",", "\"\<s2 (in MPa)\>\""}], 
+             "}"}]}], ",", "\n", "    ", 
+           RowBox[{
+           "PlotLabel", "\[Rule]", "\"\<Von Mises Yield Criterion\>\""}], ",", 
+           RowBox[{"PlotRange", "\[Rule]", "plotRange"}], ",", "\n", "    ", 
+           RowBox[{"Epilog", "\[Rule]", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"PointSize", "[", "Large", "]"}], ",", 
+              RowBox[{"Point", "[", 
+               RowBox[{"{", 
+                RowBox[{"sx", ",", "sy"}], "}"}], "]"}]}], "}"}]}]}], "]"}], 
+         ",", "\n", "    ", "\n", "    ", 
+         RowBox[{"ContourPlot", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"Max", "[", 
+             RowBox[{
+              RowBox[{"Abs", "[", 
+               RowBox[{"s1", "-", "s2"}], "]"}], ",", 
+              RowBox[{"Abs", "[", "s2", "]"}], ",", 
+              RowBox[{"Abs", "[", "s1", "]"}]}], "]"}], "\[Equal]", "Y"}], 
+           ",", 
+           RowBox[{"{", 
+            RowBox[{"s1", ",", 
+             RowBox[{
+              RowBox[{"-", "2"}], "*", "Y"}], ",", 
+             RowBox[{"2", "*", "Y"}]}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"s2", ",", 
+             RowBox[{
+              RowBox[{"-", "2"}], "*", "Y"}], ",", 
+             RowBox[{"2", "*", "Y"}]}], "}"}], ",", "\n", "    ", 
+           RowBox[{"ContourStyle", "\[Rule]", 
+            RowBox[{"{", 
+             RowBox[{"Blue", ",", "Thick"}], "}"}]}], ",", 
+           RowBox[{"FrameLabel", "\[Rule]", 
+            RowBox[{"{", 
+             RowBox[{"\"\<s1 (in MPa)\>\"", ",", "\"\<s2 (in MPa)\>\""}], 
+             "}"}]}], ",", "\n", "    ", 
+           RowBox[{"PlotLabel", "\[Rule]", "\"\<Tresca Yield Criterion\>\""}],
+            ",", 
+           RowBox[{"PlotRange", "\[Rule]", "plotRange"}], ",", "\n", "    ", 
+           RowBox[{"Epilog", "\[Rule]", 
+            RowBox[{"{", 
+             RowBox[{
+              RowBox[{"PointSize", "[", "Large", "]"}], ",", 
+              RowBox[{"Point", "[", 
+               RowBox[{"{", 
+                RowBox[{"sx", ",", "sy"}], "}"}], "]"}]}], "}"}]}]}], "]"}], 
+         ",", "\n", "    ", "\n", "    ", 
+         RowBox[{"Show", "[", "\n", "    ", 
+          RowBox[{
+           RowBox[{"ContourPlot", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{
+               RowBox[{
+                RowBox[{"(", 
+                 RowBox[{"s1", "-", "s2"}], ")"}], "^", "2"}], "+", 
+               RowBox[{"s2", "^", "2"}], "+", 
+               RowBox[{"s1", "^", "2"}]}], "\[Equal]", 
+              RowBox[{"2", "*", 
+               RowBox[{"Y", "^", "2"}]}]}], ",", 
+             RowBox[{"{", 
+              RowBox[{"s1", ",", 
+               RowBox[{
+                RowBox[{"-", "2"}], "*", "Y"}], ",", 
+               RowBox[{"2", "*", "Y"}]}], "}"}], ",", 
+             RowBox[{"{", 
+              RowBox[{"s2", ",", 
+               RowBox[{
+                RowBox[{"-", "2"}], "*", "Y"}], ",", 
+               RowBox[{"2", "*", "Y"}]}], "}"}], ",", "\n", "    ", 
+             RowBox[{"ContourStyle", "\[Rule]", 
+              RowBox[{"{", 
+               RowBox[{"Red", ",", "Thick"}], "}"}]}], ",", 
+             RowBox[{"FrameLabel", "\[Rule]", 
+              RowBox[{"{", 
+               RowBox[{"\"\<s1 (in MPa)\>\"", ",", "\"\<s2 (in MPa)\>\""}], 
+               "}"}]}], ",", "\n", "    ", 
+             RowBox[{
+             "PlotLabel", "\[Rule]", 
+              "\"\<Von Mises and Tresca Yield Criterion\>\""}], ",", 
+             RowBox[{"PlotRange", "\[Rule]", "plotRange"}], ",", "\n", "    ", 
+             RowBox[{"Epilog", "\[Rule]", 
+              RowBox[{"{", 
+               RowBox[{
+                RowBox[{"PointSize", "[", "Large", "]"}], ",", 
+                RowBox[{"Point", "[", 
+                 RowBox[{"{", 
+                  RowBox[{"sx", ",", "sy"}], "}"}], "]"}]}], "}"}]}]}], "]"}],
+            ",", "\n", "    ", 
+           RowBox[{"ContourPlot", "[", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"Max", "[", 
+               RowBox[{
+                RowBox[{"Abs", "[", 
+                 RowBox[{"s1", "-", "s2"}], "]"}], ",", 
+                RowBox[{"Abs", "[", "s2", "]"}], ",", 
+                RowBox[{"Abs", "[", "s1", "]"}]}], "]"}], "\[Equal]", "Y"}], 
+             ",", 
+             RowBox[{"{", 
+              RowBox[{"s1", ",", 
+               RowBox[{
+                RowBox[{"-", "2"}], "*", "Y"}], ",", 
+               RowBox[{"2", "*", "Y"}]}], "}"}], ",", 
+             RowBox[{"{", 
+              RowBox[{"s2", ",", 
+               RowBox[{
+                RowBox[{"-", "2"}], "*", "Y"}], ",", 
+               RowBox[{"2", "*", "Y"}]}], "}"}], ",", "\n", "    ", 
+             RowBox[{"ContourStyle", "\[Rule]", 
+              RowBox[{"{", 
+               RowBox[{"Blue", ",", "Thick"}], "}"}]}], ",", 
+             RowBox[{"FrameLabel", "\[Rule]", 
+              RowBox[{"{", 
+               RowBox[{"\"\<s1 (in MPa)\>\"", ",", "\"\<s2 (in MPa)\>\""}], 
+               "}"}]}], ",", "\n", "    ", 
+             RowBox[{
+             "PlotLabel", "\[Rule]", 
+              "\"\<Von Mises and Tresca Yield Criterion\>\""}], ",", 
+             RowBox[{"PlotRange", "\[Rule]", "plotRange"}], ",", "\n", "    ", 
+             RowBox[{"Epilog", "\[Rule]", 
+              RowBox[{"{", 
+               RowBox[{
+                RowBox[{"PointSize", "[", "Large", "]"}], ",", 
+                RowBox[{"Point", "[", 
+                 RowBox[{"{", 
+                  RowBox[{"sx", ",", "sy"}], "}"}], "]"}]}], "}"}]}]}], 
+            "]"}]}], "]"}]}], "}"}], "]"}]}]}], "\n", "  ", "]"}], ",", "\n", 
+   "  ", "\n", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"c1", ",", " ", "4500", ",", " ", "\"\<Point Load1 Value\>\""}],
+       "}"}], ",", " ", "100", ",", " ", "10000", ",", " ", "100", ",", " ", 
+     RowBox[{"Appearance", " ", "->", " ", "\"\<Labeled\>\""}]}], "}"}], ",", 
+   "\n", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+      "c12", ",", " ", "3000", ",", " ", "\"\<Point Load2 Value\>\""}], "}"}],
+      ",", " ", "100", ",", " ", "10000", ",", " ", "100", ",", " ", 
+     RowBox[{"Appearance", " ", "->", " ", "\"\<Labeled\>\""}]}], "}"}], ",", 
+   "\n", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+      "c4", ",", " ", "0", ",", " ", "\"\<Left support position\>\""}], "}"}],
+      ",", " ", "0", ",", " ", "5.25", ",", " ", "0.1", ",", " ", 
+     RowBox[{"Appearance", " ", "->", " ", "\"\<Labeled\>\""}]}], "}"}], ",", 
+   "\n", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+      "c5", ",", " ", "3.75", ",", " ", "\"\<Right support position\>\""}], 
+      "}"}], ",", " ", "0", ",", " ", "5.25", ",", " ", "0.25", ",", " ", 
+     RowBox[{"Appearance", " ", "->", " ", "\"\<Labeled\>\""}]}], "}"}], ",", 
+   "\n", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+      "c7", ",", " ", "3.75", ",", " ", "\"\<Point load1 position\>\""}], 
+      "}"}], ",", " ", "0", ",", " ", "5.25", ",", " ", "0.1", ",", " ", 
+     RowBox[{"Appearance", " ", "->", " ", "\"\<Labeled\>\""}]}], "}"}], ",", 
+   "\n", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+      "c11", ",", " ", "2", ",", " ", "\"\<Point load2 position\>\""}], "}"}],
+      ",", " ", "0", ",", " ", "5.25", ",", " ", "0.1", ",", " ", 
+     RowBox[{"Appearance", " ", "->", " ", "\"\<Labeled\>\""}]}], "}"}], ",", 
+   "\n", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+      "c8", ",", " ", "3.75", ",", " ", "\"\<Start of distributed load\>\""}],
+       "}"}], ",", " ", "0", ",", " ", "5.25", ",", " ", "0.1", ",", " ", 
+     RowBox[{"Appearance", " ", "->", " ", "\"\<Labeled\>\""}]}], "}"}], ",", 
+   "\n", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+      "c9", ",", " ", "1", ",", " ", "\"\<Point load1 height scale\>\""}], 
+      "}"}], ",", " ", "0.1", ",", " ", "5", ",", " ", "0.1", ",", " ", 
+     RowBox[{"Appearance", " ", "->", " ", "\"\<Labeled\>\""}]}], "}"}], ",", 
+   "\n", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+      "c13", ",", " ", "1", ",", " ", "\"\<Point load2 height scale\>\""}], 
+      "}"}], ",", " ", "0.1", ",", " ", "5", ",", " ", "0.1", ",", " ", 
+     RowBox[{"Appearance", " ", "->", " ", "\"\<Labeled\>\""}]}], "}"}], ",", 
+   "\n", " ", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{
+      "c10", ",", " ", "1", ",", " ", 
+       "\"\<Distributed load height scale\>\""}], "}"}], ",", " ", "0.1", ",",
+      " ", "5", ",", " ", "0.1", ",", " ", 
+     RowBox[{"Appearance", " ", "->", " ", "\"\<Labeled\>\""}]}], "}"}]}], 
+  "\n", "]"}]}], "Code",
+ CellChangeTimes->{{3.9228039693205853`*^9, 3.922803980297185*^9}, {
+   3.922804028549905*^9, 3.922804032581126*^9}, {3.922804178227208*^9, 
+   3.9228042296163206`*^9}, {3.922804270384254*^9, 3.922804272974025*^9}, 
+   3.9228157456519403`*^9, {3.9228158110239053`*^9, 3.9228158123252134`*^9}, {
+   3.9228159064269633`*^9, 3.9228159348371987`*^9}, {3.922815966412281*^9, 
+   3.9228159954026184`*^9}, 3.9228160497936144`*^9, {3.9228160805782113`*^9, 
+   3.9228160945865498`*^9}, {3.922816132648814*^9, 3.922816171104742*^9}, {
+   3.922816246408965*^9, 3.922816345574095*^9}, {3.9228163826674147`*^9, 
+   3.9228164519864273`*^9}, {3.922816523037402*^9, 3.9228165290008593`*^9}, {
+   3.9228167306786337`*^9, 3.9228167541611156`*^9}, {3.9228168273389874`*^9, 
+   3.922816828467136*^9}, {3.9228168915854626`*^9, 3.922816924618572*^9}, 
+   3.922816981252281*^9, {3.9228170190576005`*^9, 3.92281704021008*^9}, {
+   3.9228170814423895`*^9, 3.9228171113472366`*^9}, {3.9228171496280584`*^9, 
+   3.922817164658821*^9}, {3.9228173102451725`*^9, 3.922817335338196*^9}, {
+   3.922817396168021*^9, 3.9228174006254992`*^9}, {3.922817442052847*^9, 
+   3.922817464587385*^9}, {3.9228175508622255`*^9, 3.9228176774078665`*^9}, {
+   3.9228177253332863`*^9, 3.9228177468332896`*^9}, {3.922817864864535*^9, 
+   3.9228178652368546`*^9}, {3.922817898364996*^9, 3.922817917845752*^9}, {
+   3.9228179684479446`*^9, 3.9228180081270876`*^9}, {3.922818056453309*^9, 
+   3.9228180633613663`*^9}, {3.9228197735768857`*^9, 3.922819794038973*^9}, {
+   3.922820457154462*^9, 3.922820616309168*^9}, {3.922820655683919*^9, 
+   3.9228206575990114`*^9}, {3.9228207131915455`*^9, 3.922820734083946*^9}, {
+   3.922820816300537*^9, 3.922820893136775*^9}, {3.922820940953107*^9, 
+   3.9228210367574944`*^9}, {3.9228211116042066`*^9, 
+   3.9228211949567595`*^9}, {3.922821328849455*^9, 3.9228213343029647`*^9}, {
+   3.9228213696520576`*^9, 3.9228213713661156`*^9}, {3.922821412513941*^9, 
+   3.9228215077623773`*^9}, {3.9228215555689096`*^9, 3.92282165175541*^9}, {
+   3.92282172061458*^9, 3.922821741441785*^9}, {3.922831116106207*^9, 
+   3.922831196335369*^9}, {3.922832815636818*^9, 3.9228328904398556`*^9}, {
+   3.922832921548133*^9, 3.9228329223879466`*^9}, {3.922833542820511*^9, 
+   3.922833564868647*^9}, {3.92283382977055*^9, 3.9228338339308643`*^9}, {
+   3.9228339923912053`*^9, 3.922833994586937*^9}, 3.9228347386195536`*^9, {
+   3.9228349704675226`*^9, 3.922834993231603*^9}, 3.9228351992150154`*^9, 
+   3.922835252696754*^9, {3.9228362414406147`*^9, 3.922836265216155*^9}, {
+   3.9228364146613097`*^9, 3.922836419151985*^9}, 3.92283649062497*^9, {
+   3.9228366648525133`*^9, 3.9228366848924856`*^9}, {3.922836716896371*^9, 
+   3.9228367597340775`*^9}, {3.9228368195426965`*^9, 3.922836887169524*^9}, {
+   3.9228369933715405`*^9, 3.9228371234909315`*^9}, {3.9228372436614494`*^9, 
+   3.9228372734332886`*^9}, {3.922837328959427*^9, 3.9228373321349344`*^9}, {
+   3.922837475986351*^9, 3.9228375239665284`*^9}, {3.922837663088006*^9, 
+   3.9228376650410633`*^9}, {3.922837698830661*^9, 3.922837711837302*^9}, {
+   3.9228377451258793`*^9, 3.9228377465606227`*^9}, {3.9228978773742075`*^9, 
+   3.9228979256668105`*^9}, {3.922897994155812*^9, 3.922898110911483*^9}, {
+   3.922898295694459*^9, 3.922898338002107*^9}, {3.922898588018079*^9, 
+   3.9228986157439594`*^9}, {3.922898748900134*^9, 3.9228987556465073`*^9}, {
+   3.9228987892721434`*^9, 3.922898789375016*^9}, {3.922899225945994*^9, 
+   3.922899263427062*^9}, {3.9228993052437067`*^9, 3.9228993125370154`*^9}, {
+   3.9228994047958784`*^9, 3.9228994258024235`*^9}, {3.9228994695353975`*^9, 
+   3.92289948091986*^9}, {3.9228997733622704`*^9, 3.922899801965641*^9}, {
+   3.9228999455664644`*^9, 3.922900113173632*^9}, {3.9229001577253237`*^9, 
+   3.922900191706583*^9}, {3.922900254063711*^9, 3.9229002659419975`*^9}, {
+   3.9229003420053525`*^9, 3.922900361674858*^9}, {3.922900438473414*^9, 
+   3.9229004502015715`*^9}, {3.922900601048277*^9, 3.9229006036777663`*^9}, {
+   3.922900695193777*^9, 3.922900715744048*^9}, {3.932689215069215*^9, 
+   3.9326892221949463`*^9}, {3.93268929208016*^9, 3.9326893154667034`*^9}},
+ CellLabel->"In[10]:=",ExpressionUUID->"06187f7e-f074-483b-9885-4727d7a288fa"],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`c1$$ = 4500, $CellContext`c10$$ = 
+    1, $CellContext`c11$$ = 2, $CellContext`c12$$ = 3000, $CellContext`c13$$ =
+     1, $CellContext`c4$$ = 0, $CellContext`c5$$ = 3.75, $CellContext`c7$$ = 
+    3.75, $CellContext`c8$$ = 3.75, $CellContext`c9$$ = 1, Typeset`show$$ = 
+    True, Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+    Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+    "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`c1$$], 4500, "Point Load1 Value"}, 100, 10000, 
+      100}, {{
+       Hold[$CellContext`c12$$], 3000, "Point Load2 Value"}, 100, 10000, 
+      100}, {{
+       Hold[$CellContext`c4$$], 0, "Left support position"}, 0, 5.25, 0.1}, {{
+       Hold[$CellContext`c5$$], 3.75, "Right support position"}, 0, 5.25, 
+      0.25}, {{
+       Hold[$CellContext`c7$$], 3.75, "Point load1 position"}, 0, 5.25, 
+      0.1}, {{
+       Hold[$CellContext`c11$$], 2, "Point load2 position"}, 0, 5.25, 0.1}, {{
+       Hold[$CellContext`c8$$], 3.75, "Start of distributed load"}, 0, 5.25, 
+      0.1}, {{
+       Hold[$CellContext`c9$$], 1, "Point load1 height scale"}, 0.1, 5, 
+      0.1}, {{
+       Hold[$CellContext`c13$$], 1, "Point load2 height scale"}, 0.1, 5, 
+      0.1}, {{
+       Hold[$CellContext`c10$$], 1, "Distributed load height scale"}, 0.1, 5, 
+      0.1}}, Typeset`size$$ = {6288., {171., 175.}}, Typeset`update$$ = 0, 
+    Typeset`initDone$$, Typeset`skipInitDone$$ = 
+    True, $CellContext`c1$77844$$ = 0, $CellContext`c12$77845$$ = 
+    0, $CellContext`c4$77846$$ = 0, $CellContext`c5$77847$$ = 
+    0, $CellContext`c7$77848$$ = 0, $CellContext`c11$77849$$ = 
+    0, $CellContext`c8$77850$$ = 0, $CellContext`c9$77851$$ = 
+    0, $CellContext`c13$77852$$ = 0, $CellContext`c10$77853$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, 
+      "Variables" :> {$CellContext`c1$$ = 4500, $CellContext`c10$$ = 
+        1, $CellContext`c11$$ = 2, $CellContext`c12$$ = 
+        3000, $CellContext`c13$$ = 1, $CellContext`c4$$ = 
+        0, $CellContext`c5$$ = 3.75, $CellContext`c7$$ = 
+        3.75, $CellContext`c8$$ = 3.75, $CellContext`c9$$ = 1}, 
+      "ControllerVariables" :> {
+        Hold[$CellContext`c1$$, $CellContext`c1$77844$$, 0], 
+        Hold[$CellContext`c12$$, $CellContext`c12$77845$$, 0], 
+        Hold[$CellContext`c4$$, $CellContext`c4$77846$$, 0], 
+        Hold[$CellContext`c5$$, $CellContext`c5$77847$$, 0], 
+        Hold[$CellContext`c7$$, $CellContext`c7$77848$$, 0], 
+        Hold[$CellContext`c11$$, $CellContext`c11$77849$$, 0], 
+        Hold[$CellContext`c8$$, $CellContext`c8$77850$$, 0], 
+        Hold[$CellContext`c9$$, $CellContext`c9$77851$$, 0], 
+        Hold[$CellContext`c13$$, $CellContext`c13$77852$$, 0], 
+        Hold[$CellContext`c10$$, $CellContext`c10$77853$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> 
+      Module[{$CellContext`L$, $CellContext`h$, $CellContext`b$, \
+$CellContext`Izz$, $CellContext`P$, $CellContext`P1$, $CellContext`sx$, \
+$CellContext`sy$, $CellContext`q$, $CellContext`q1$, $CellContext`qo$, \
+$CellContext`V$, $CellContext`M$, $CellContext`bc$, $CellContext`R1$, \
+$CellContext`R2$, $CellContext`data$, $CellContext`trianglePos$, \
+$CellContext`trianglePos1$, $CellContext`support$, $CellContext`support1$, \
+$CellContext`beam$, $CellContext`pointLoad1$, $CellContext`pointLoad2$, \
+$CellContext`arrows$, $CellContext`beamGraphic$, $CellContext`solV$, \
+$CellContext`solvution$, $CellContext`solution$}, $CellContext`L$ = 
+         5.25; $CellContext`h$ = 0.05; $CellContext`b$ = 
+         0.05; $CellContext`Izz$ = $CellContext`b$ ($CellContext`h$^3/
+           12); $CellContext`P$ = $CellContext`c1$$; $CellContext`P1$ = \
+$CellContext`c12$$; $CellContext`q$[
+           Pattern[$CellContext`x, 
+            Blank[]]] := Piecewise[{{0, 
+             Inequality[0, LessEqual, $CellContext`x, Less, 1.5]}, {0, 
+             Inequality[1.5, LessEqual, $CellContext`x, Less, 3.75]}, {0, 
+             Inequality[
+             3.75, LessEqual, $CellContext`x, Less, 5.25]}}]; $CellContext`q1$[
+           Pattern[$CellContext`x$, 
+            Blank[]]] := $CellContext`P$ 
+           DiracDelta[$CellContext`x$ - $CellContext`c7$$] + $CellContext`P1$ 
+           DiracDelta[$CellContext`x$ - $CellContext`c11$$]; $CellContext`qo$[
+           Pattern[$CellContext`x$, 
+            Blank[]]] := $CellContext`q$[$CellContext`x$] - $CellContext`R1$ 
+          DiracDelta[$CellContext`x$ - $CellContext`c4$$] - $CellContext`R2$ 
+          DiracDelta[$CellContext`x$ - $CellContext`c5$$] + \
+$CellContext`q1$[$CellContext`x$]; $CellContext`data$ = Table[{$CellContext`x, 
+            $CellContext`q$[$CellContext`x]}, {$CellContext`x, 
+            0, $CellContext`L$, 0.1}]; $CellContext`data$ = 
+         Join[$CellContext`data$, {{$CellContext`c7$$, $CellContext`P$}}]; \
+$CellContext`data$ = 
+         Join[$CellContext`data$, {{$CellContext`c11$$, $CellContext`P1$}}]; \
+$CellContext`trianglePos$ = $CellContext`c4$$; $CellContext`trianglePos1$ = \
+$CellContext`c5$$; $CellContext`support$ = 
+         Polygon[{{$CellContext`trianglePos$ - 
+             0.1, -0.2}, {$CellContext`trianglePos$, 
+             0}, {$CellContext`trianglePos$ + 
+             0.1, -0.2}}]; $CellContext`support1$ = 
+         Polygon[{{$CellContext`trianglePos1$ - 
+             0.1, -0.2}, {$CellContext`trianglePos1$, 
+             0}, {$CellContext`trianglePos1$ + 
+             0.1, -0.2}}]; $CellContext`beam$ = 
+         Line[{{0, 0}, {$CellContext`L$, 0}}]; $CellContext`pointLoad1$ = 
+         Arrow[{{$CellContext`c7$$, $CellContext`c9$$}, {$CellContext`c7$$, 
+             0}}]; $CellContext`pointLoad2$ = 
+         Arrow[{{$CellContext`c11$$, $CellContext`c13$$}, {$CellContext`c11$$,
+              0}}]; $CellContext`arrows$ = Table[
+           
+           Arrow[{{$CellContext`x, $CellContext`c10$$ \
+($CellContext`q$[$CellContext`x]/1000)}, {$CellContext`x, 
+              0}}], {$CellContext`x, $CellContext`c8$$, $CellContext`L$, 
+            0.25}]; $CellContext`beamGraphic$ = 
+         Graphics[{$CellContext`support$, $CellContext`support1$, \
+$CellContext`beam$, $CellContext`pointLoad1$, $CellContext`pointLoad2$, \
+$CellContext`arrows$}, ImageSize -> {800, 400}]; $CellContext`W = Integrate[
+           $CellContext`q$[$CellContext`x], {$CellContext`x, 
+            0, $CellContext`L$}]; $CellContext`eq1 = $CellContext`R1$ + \
+$CellContext`R2$ == $CellContext`W + $CellContext`P$ + $CellContext`P1$; \
+$CellContext`eq2 = $CellContext`c4$$ $CellContext`R1$ + $CellContext`c5$$ \
+$CellContext`R2$ == 
+          Integrate[$CellContext`q$[$CellContext`x] $CellContext`x, \
+{$CellContext`x, 0, $CellContext`L$}] + 
+           Integrate[$CellContext`q1$[$CellContext`x] $CellContext`x, \
+{$CellContext`x, 0, $CellContext`L$}]; $CellContext`solution$ = 
+         Solve[{$CellContext`eq1, $CellContext`eq2}, {$CellContext`R1$, \
+$CellContext`R2$}]; $CellContext`R1$ = ReplaceAll[$CellContext`R1$, 
+           Part[$CellContext`solution$, 1]]; $CellContext`R2$ = 
+         ReplaceAll[$CellContext`R2$, 
+           Part[$CellContext`solution$, 1]]; $CellContext`eq3 = D[
+           $CellContext`V$[$CellContext`x], $CellContext`x]; $CellContext`eq4 = 
+         D[
+           $CellContext`M$[$CellContext`x], $CellContext`x]; If[
+          
+          And[$CellContext`c4$$ == 0, $CellContext`c7$$ == 
+           0], $CellContext`bc$ = {$CellContext`V$[0] == 
+            0, $CellContext`M$[0] == 0}, 
+          If[
+           
+           And[$CellContext`c4$$ != 0, $CellContext`c7$$ == 
+            0], $CellContext`bc$ = {$CellContext`V$[0] == 
+             0, $CellContext`M$[0] == 0}, 
+           If[
+            
+            And[$CellContext`c4$$ != 0, $CellContext`c7$$ != 
+             0], $CellContext`bc$ = {$CellContext`V$[0] == 
+              0, $CellContext`M$[0] == 
+              0}, $CellContext`bc$ = {$CellContext`V$[
+               0] == -$CellContext`R1$, $CellContext`M$[0] == 
+              0}]]]; $CellContext`solV$ = 
+         NDSolve[{$CellContext`eq3 == $CellContext`qo$[$CellContext`x], \
+$CellContext`eq4 == -$CellContext`V$[$CellContext`x], $CellContext`bc$}, {
+            $CellContext`V$[$CellContext`x], 
+            $CellContext`M$[$CellContext`x]}, {$CellContext`x, 
+            0, $CellContext`L$}]; $CellContext`vonMises[
+           Pattern[$CellContext`s1, 
+            Blank[]], 
+           Pattern[$CellContext`s2, 
+            Blank[]], 
+           Pattern[$CellContext`Y, 
+            
+            Blank[]]] := ($CellContext`s1 - $CellContext`s2)^2 + \
+$CellContext`s2^2 + $CellContext`s1^2 - 
+          2 $CellContext`Y^2; $CellContext`Tresca[
+           Pattern[$CellContext`s1, 
+            Blank[]], 
+           Pattern[$CellContext`s2, 
+            Blank[]], 
+           Pattern[$CellContext`Y, 
+            Blank[]]] := Max[
+            Abs[$CellContext`s1 - $CellContext`s2], 
+            Abs[$CellContext`s2], 
+            Abs[$CellContext`s1]] - $CellContext`Y; $CellContext`Y = 
+         220; $CellContext`plotRange = {{(-2) $CellContext`Y, 
+            2 $CellContext`Y}, {(-2) $CellContext`Y, 
+            2 $CellContext`Y}}; $CellContext`sx$ = Part[
+            Maximize[
+             Abs[
+              
+              ReplaceAll[($CellContext`h$/(
+                2 $CellContext`Izz$)) $CellContext`M$[$CellContext`x], 
+               Part[$CellContext`solV$, 1]]], {
+             0 <= $CellContext`x <= $CellContext`L$}, $CellContext`x], 1]/
+          10^6; $CellContext`sy$ = 0; GraphicsRow[{$CellContext`beamGraphic$, 
+           Column[{"R1->", $CellContext`R1$, "R2->", $CellContext`R2$}], 
+           Plot[
+            ReplaceAll[
+             $CellContext`V$[$CellContext`x], 
+             Part[$CellContext`solV$, 1]], {$CellContext`x, 
+             0, $CellContext`L$}, PlotLabel -> "Shear Force Diagram"], 
+           Plot[
+            ReplaceAll[
+             $CellContext`M$[$CellContext`x], 
+             Part[$CellContext`solV$, 1]], {$CellContext`x, 
+             0, $CellContext`L$}, PlotLabel -> "Bending Moment Diagram"], 
+           Plot[
+            
+            ReplaceAll[($CellContext`h$/(
+              2 $CellContext`Izz$)) $CellContext`M$[$CellContext`x], 
+             Part[$CellContext`solV$, 1]], {$CellContext`x, 
+             0, $CellContext`L$}, PlotLabel -> "Stress Diagram"], 
+           Column[{"Maximum Stress with the location on the beam->", 
+             Maximize[
+              Abs[
+               
+               ReplaceAll[($CellContext`h$/(
+                 2 $CellContext`Izz$)) $CellContext`M$[$CellContext`x], 
+                Part[$CellContext`solV$, 1]]], {
+              0 <= $CellContext`x <= $CellContext`L$}, $CellContext`x]}], 
+           
+           ContourPlot[($CellContext`s1 - $CellContext`s2)^2 + \
+$CellContext`s2^2 + $CellContext`s1^2 == 
+            2 $CellContext`Y^2, {$CellContext`s1, (-2) $CellContext`Y, 
+             2 $CellContext`Y}, {$CellContext`s2, (-2) $CellContext`Y, 
+             2 $CellContext`Y}, ContourStyle -> {Red, Thick}, 
+            FrameLabel -> {"s1 (in MPa)", "s2 (in MPa)"}, PlotLabel -> 
+            "Von Mises Yield Criterion", PlotRange -> $CellContext`plotRange, 
+            Epilog -> {
+              PointSize[Large], 
+              Point[{$CellContext`sx$, $CellContext`sy$}]}], 
+           ContourPlot[Max[
+              Abs[$CellContext`s1 - $CellContext`s2], 
+              Abs[$CellContext`s2], 
+              
+              Abs[$CellContext`s1]] == $CellContext`Y, {$CellContext`s1, (-2) \
+$CellContext`Y, 2 $CellContext`Y}, {$CellContext`s2, (-2) $CellContext`Y, 
+             2 $CellContext`Y}, ContourStyle -> {Blue, Thick}, 
+            FrameLabel -> {"s1 (in MPa)", "s2 (in MPa)"}, PlotLabel -> 
+            "Tresca Yield Criterion", PlotRange -> $CellContext`plotRange, 
+            Epilog -> {
+              PointSize[Large], 
+              Point[{$CellContext`sx$, $CellContext`sy$}]}], 
+           Show[
+            
+            ContourPlot[($CellContext`s1 - $CellContext`s2)^2 + \
+$CellContext`s2^2 + $CellContext`s1^2 == 
+             2 $CellContext`Y^2, {$CellContext`s1, (-2) $CellContext`Y, 
+              2 $CellContext`Y}, {$CellContext`s2, (-2) $CellContext`Y, 
+              2 $CellContext`Y}, ContourStyle -> {Red, Thick}, 
+             FrameLabel -> {"s1 (in MPa)", "s2 (in MPa)"}, PlotLabel -> 
+             "Von Mises and Tresca Yield Criterion", 
+             PlotRange -> $CellContext`plotRange, Epilog -> {
+               PointSize[Large], 
+               Point[{$CellContext`sx$, $CellContext`sy$}]}], 
+            ContourPlot[Max[
+               Abs[$CellContext`s1 - $CellContext`s2], 
+               Abs[$CellContext`s2], 
+               
+               Abs[$CellContext`s1]] == $CellContext`Y, {$CellContext`s1, \
+(-2) $CellContext`Y, 2 $CellContext`Y}, {$CellContext`s2, (-2) $CellContext`Y,
+               2 $CellContext`Y}, ContourStyle -> {Blue, Thick}, 
+             FrameLabel -> {"s1 (in MPa)", "s2 (in MPa)"}, PlotLabel -> 
+             "Von Mises and Tresca Yield Criterion", 
+             PlotRange -> $CellContext`plotRange, Epilog -> {
+               PointSize[Large], 
+               Point[{$CellContext`sx$, $CellContext`sy$}]}]]}]], 
+      "Specifications" :> {{{$CellContext`c1$$, 4500, "Point Load1 Value"}, 
+         100, 10000, 100, Appearance -> 
+         "Labeled"}, {{$CellContext`c12$$, 3000, "Point Load2 Value"}, 100, 
+         10000, 100, Appearance -> 
+         "Labeled"}, {{$CellContext`c4$$, 0, "Left support position"}, 0, 
+         5.25, 0.1, Appearance -> 
+         "Labeled"}, {{$CellContext`c5$$, 3.75, "Right support position"}, 0, 
+         5.25, 0.25, Appearance -> 
+         "Labeled"}, {{$CellContext`c7$$, 3.75, "Point load1 position"}, 0, 
+         5.25, 0.1, Appearance -> 
+         "Labeled"}, {{$CellContext`c11$$, 2, "Point load2 position"}, 0, 
+         5.25, 0.1, Appearance -> 
+         "Labeled"}, {{$CellContext`c8$$, 3.75, "Start of distributed load"}, 
+         0, 5.25, 0.1, Appearance -> 
+         "Labeled"}, {{$CellContext`c9$$, 1, "Point load1 height scale"}, 0.1,
+          5, 0.1, Appearance -> 
+         "Labeled"}, {{$CellContext`c13$$, 1, "Point load2 height scale"}, 
+         0.1, 5, 0.1, Appearance -> 
+         "Labeled"}, {{$CellContext`c10$$, 1, 
+          "Distributed load height scale"}, 0.1, 5, 0.1, Appearance -> 
+         "Labeled"}}, "Options" :> {}, "DefaultOptions" :> {}],
+     ImageSizeCache->{7487., {220., 226.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{
+  3.9228343600173593`*^9, {3.922834746531217*^9, 3.9228347517605944`*^9}, {
+   3.92283520621364*^9, 3.9228352238170166`*^9}, 3.922835487991083*^9, {
+   3.9228356002997046`*^9, 3.9228356110666013`*^9}, {3.9228362714278154`*^9, 
+   3.922836279946542*^9}, {3.922836557837019*^9, 3.92283655836919*^9}, 
+   3.922836766436516*^9, {3.922836899887326*^9, 3.922836911834344*^9}, {
+   3.922837129773389*^9, 3.922837139627922*^9}, 3.9228371825048027`*^9, {
+   3.9228373449687853`*^9, 3.922837358232561*^9}, {3.922837533879758*^9, 
+   3.922837541496931*^9}, 3.9228376444742*^9, 3.9228376746224008`*^9, {
+   3.9228377080608063`*^9, 3.92283776023705*^9}, {3.9228979355861053`*^9, 
+   3.9228979615640936`*^9}, 3.922898114911111*^9, 3.9228982207264566`*^9, {
+   3.9228983445435576`*^9, 3.922898351164091*^9}, {3.9228986217855864`*^9, 
+   3.922898636078781*^9}, {3.922898758013755*^9, 3.922898811431642*^9}, {
+   3.9228993235133305`*^9, 3.9228993264019322`*^9}, {3.922899429041274*^9, 
+   3.9228994438691907`*^9}, 3.922899485326214*^9, 3.92289970752013*^9, {
+   3.922899807418291*^9, 3.922899817454297*^9}, {3.9229001965380774`*^9, 
+   3.922900214296595*^9}, 3.922900267944518*^9, {3.922900378318804*^9, 
+   3.922900385294874*^9}, {3.9229004542117877`*^9, 3.922900462905054*^9}, 
+   3.9229006096787014`*^9, 3.922900725238165*^9, {3.9326892519797783`*^9, 
+   3.9326892777743306`*^9}, 3.932689326141407*^9},
+ CellLabel->"Out[12]=",ExpressionUUID->"e032a1c6-b710-459d-9660-511a6a1bc9a8"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData["D"], "Input",
+ CellChangeTimes->{3.9228319433117104`*^9},
+ CellLabel->"In[13]:=",ExpressionUUID->"abba0b2a-c3c8-4d7e-9ab4-4489597b4eed"],
+
+Cell[BoxData["D"], "Output",
+ CellChangeTimes->{3.9228987985869913`*^9, 3.932689257494335*^9, 
+  3.9326893298462086`*^9},
+ CellLabel->"Out[13]=",ExpressionUUID->"61beffe8-bc4d-4af4-9a0e-b746f58830ee"]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"Manipulate", "[", "\n", "  ", 
+   RowBox[{
+    RowBox[{"Graphics", "[", 
+     RowBox[{
+      RowBox[{"{", "\n", "    ", 
+       RowBox[{
+        RowBox[{"EdgeForm", "[", "Black", "]"}], ",", " ", 
+        RowBox[{"(*", " ", 
+         RowBox[{"Black", " ", "edge", " ", "color"}], " ", "*)"}], "\n", 
+        "    ", 
+        RowBox[{"FaceForm", "[", "LightBlue", "]"}], ",", " ", 
+        RowBox[{"(*", " ", 
+         RowBox[{
+         "Fill", " ", "color", " ", "of", " ", "the", " ", "rectangle"}], " ",
+          "*)"}], "\n", "\n", "    ", 
+        RowBox[{"(*", " ", 
+         RowBox[{"Rectangle", " ", "with", " ", 
+          RowBox[{"base", " ", "'"}], 
+          RowBox[{"b", "'"}], " ", "and", " ", 
+          RowBox[{"height", " ", "'"}], 
+          RowBox[{"h", "'"}], " ", "centered", " ", "at", " ", 
+          RowBox[{"{", 
+           RowBox[{"0", ",", " ", "0"}], "}"}]}], " ", "*)"}], "\n", "    ", 
+        RowBox[{"Rectangle", "[", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"-", "h"}], "/", "2"}], ",", " ", 
+            RowBox[{
+             RowBox[{"-", "b"}], "/", "2"}]}], "}"}], ",", " ", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"h", "/", "2"}], ",", " ", 
+            RowBox[{"b", "/", "2"}]}], "}"}]}], "]"}], ",", "\n", "\n", 
+        "    ", 
+        RowBox[{"(*", " ", 
+         RowBox[{"Labels", " ", "for", " ", 
+          RowBox[{"dimensions", " ", "'"}], 
+          RowBox[{"b", "'"}], " ", 
+          RowBox[{"and", " ", "'"}], 
+          RowBox[{"h", "'"}]}], " ", "*)"}], "\n", "    ", 
+        RowBox[{"Text", "[", 
+         RowBox[{
+          RowBox[{"Style", "[", 
+           RowBox[{
+           "\"\<h\>\"", ",", " ", "Black", ",", " ", "Bold", ",", " ", "12"}],
+            "]"}], ",", " ", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+             RowBox[{
+              RowBox[{"-", "h"}], "/", "2"}], " ", "-", " ", "0.015"}], ",", 
+            " ", "0"}], "}"}]}], "]"}], ",", " ", 
+        RowBox[{"(*", " ", 
+         RowBox[{
+          RowBox[{"Label", " ", "'"}], 
+          RowBox[{"b", "'"}], " ", "on", " ", "the", " ", "left", " ", 
+          "side"}], " ", "*)"}], "\n", "    ", 
+        RowBox[{"Text", "[", 
+         RowBox[{
+          RowBox[{"Style", "[", 
+           RowBox[{
+           "\"\<\>\"", ",", " ", "Black", ",", " ", "Bold", ",", " ", "12"}], 
+           "]"}], ",", " ", 
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{
+             RowBox[{"h", "/", "2"}], " ", "+", " ", "0.015"}], ",", " ", 
+            "0"}], "}"}]}], "]"}], ",", "   ", 
+        RowBox[{"(*", " ", 
+         RowBox[{
+          RowBox[{"Label", " ", "'"}], 
+          RowBox[{"b", "'"}], " ", "on", " ", "the", " ", "right", " ", 
+          "side"}], " ", "*)"}], "\n", "    ", 
+        RowBox[{"Text", "[", 
+         RowBox[{
+          RowBox[{"Style", "[", 
+           RowBox[{
+           "\"\<\>\"", ",", " ", "Black", ",", " ", "Bold", ",", " ", "12"}], 
+           "]"}], ",", " ", 
+          RowBox[{"{", 
+           RowBox[{"0", ",", " ", 
+            RowBox[{
+             RowBox[{
+              RowBox[{"-", "b"}], "/", "2"}], " ", "-", " ", "0.015"}]}], 
+           "}"}]}], "]"}], ",", "  ", 
+        RowBox[{"(*", " ", 
+         RowBox[{
+          RowBox[{"Label", " ", "'"}], 
+          RowBox[{"h", "'"}], " ", "below", " ", "the", " ", "rectangle"}], 
+         " ", "*)"}], "\n", "    ", 
+        RowBox[{"Text", "[", 
+         RowBox[{
+          RowBox[{"Style", "[", 
+           RowBox[{
+           "\"\<b\>\"", ",", " ", "Black", ",", " ", "Bold", ",", " ", "12"}],
+            "]"}], ",", " ", 
+          RowBox[{"{", 
+           RowBox[{"0", ",", " ", 
+            RowBox[{
+             RowBox[{"b", "/", "2"}], " ", "+", " ", "0.015"}]}], "}"}]}], 
+         "]"}]}], "    ", 
+       RowBox[{"(*", " ", 
+        RowBox[{
+         RowBox[{"Label", " ", "'"}], 
+         RowBox[{"h", "'"}], " ", "above", " ", "the", " ", "rectangle"}], 
+        " ", "*)"}], "\n", "  ", "}"}], ",", " ", 
+      RowBox[{"PlotRange", " ", "->", " ", 
+       RowBox[{"{", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"-", "0.06"}], ",", " ", "0.06"}], "}"}], ",", " ", 
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"-", "0.06"}], ",", " ", "0.06"}], "}"}]}], "}"}]}], ",", 
+      " ", 
+      RowBox[{"ImageSize", " ", "->", " ", "Medium"}]}], "]"}], ",", " ", 
+    "\n", "\n", "  ", 
+    RowBox[{"(*", " ", 
+     RowBox[{"Controls", " ", "for", " ", "the", " ", "sliders"}], " ", 
+     "*)"}], "\n", "  ", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"b", ",", " ", "0.05", ",", " ", 
+        RowBox[{"Style", "[", 
+         RowBox[{"\"\<Base (b)\>\"", ",", " ", "Black", ",", " ", "Bold"}], 
+         "]"}]}], "}"}], ",", " ", "0.01", ",", " ", "0.1", ",", " ", "0.01", 
+      ",", " ", 
+      RowBox[{"ControlType", " ", "->", " ", "Slider"}], ",", " ", 
+      RowBox[{"Appearance", " ", "->", " ", "\"\<Labeled\>\""}]}], "}"}], ",",
+     " ", "\n", "  ", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"{", 
+       RowBox[{"h", ",", " ", "0.05", ",", " ", 
+        RowBox[{"Style", "[", 
+         RowBox[{"\"\<Height (h)\>\"", ",", " ", "Black", ",", " ", "Bold"}], 
+         "]"}]}], "}"}], ",", " ", "0.01", ",", " ", "0.1", ",", " ", "0.01", 
+      ",", " ", 
+      RowBox[{"ControlType", " ", "->", " ", "Slider"}], ",", " ", 
+      RowBox[{"Appearance", " ", "->", " ", "\"\<Labeled\>\""}]}], "}"}]}], 
+   "\n", "]"}], "\n", "\n"}]], "Code",
+ CellChangeTimes->{
+  3.9228382305441413`*^9, {3.9228383120731306`*^9, 3.922838335878177*^9}, {
+   3.922838460980647*^9, 3.9228384739672384`*^9}, {3.922838578522381*^9, 
+   3.922838625858356*^9}},
+ CellLabel->"In[14]:=",ExpressionUUID->"c1be4070-29f8-485f-8a98-4d8c7fdae24b"],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`b$$ = 0.05, $CellContext`h$$ = 0.05, 
+    Typeset`show$$ = True, Typeset`bookmarkList$$ = {}, 
+    Typeset`bookmarkMode$$ = "Menu", Typeset`animator$$, Typeset`animvar$$ = 
+    1, Typeset`name$$ = "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`b$$], 0.05, 
+       Style["Base (b)", 
+        GrayLevel[0], Bold]}, 0.01, 0.1, 0.01}, {{
+       Hold[$CellContext`h$$], 0.05, 
+       Style["Height (h)", 
+        GrayLevel[0], Bold]}, 0.01, 0.1, 0.01}}, Typeset`size$$ = {
+    288., {142., 146.}}, Typeset`update$$ = 0, Typeset`initDone$$, 
+    Typeset`skipInitDone$$ = True, $CellContext`b$197258$$ = 
+    0, $CellContext`h$197259$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, 
+      "Variables" :> {$CellContext`b$$ = 0.05, $CellContext`h$$ = 0.05}, 
+      "ControllerVariables" :> {
+        Hold[$CellContext`b$$, $CellContext`b$197258$$, 0], 
+        Hold[$CellContext`h$$, $CellContext`h$197259$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> Graphics[{
+         EdgeForm[Black], 
+         FaceForm[LightBlue], 
+         Rectangle[{(-$CellContext`h$$)/2, (-$CellContext`b$$)/
+           2}, {$CellContext`h$$/2, $CellContext`b$$/2}], 
+         Text[
+          Style["h", Black, Bold, 12], {(-$CellContext`h$$)/2 - 0.015, 0}], 
+         Text[
+          Style["", Black, Bold, 12], {$CellContext`h$$/2 + 0.015, 0}], 
+         Text[
+          Style["", Black, Bold, 12], {0, (-$CellContext`b$$)/2 - 0.015}], 
+         Text[
+          Style["b", Black, Bold, 12], {0, $CellContext`b$$/2 + 0.015}]}, 
+        PlotRange -> {{-0.06, 0.06}, {-0.06, 0.06}}, ImageSize -> Medium], 
+      "Specifications" :> {{{$CellContext`b$$, 0.05, 
+          Style["Base (b)", 
+           GrayLevel[0], Bold]}, 0.01, 0.1, 0.01, ControlType -> Slider, 
+         Appearance -> "Labeled"}, {{$CellContext`h$$, 0.05, 
+          Style["Height (h)", 
+           GrayLevel[0], Bold]}, 0.01, 0.1, 0.01, ControlType -> Slider, 
+         Appearance -> "Labeled"}}, "Options" :> {}, "DefaultOptions" :> {}],
+     ImageSizeCache->{331., {192., 197.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    SynchronousInitialization->True,
+    UndoTrackedVariables:>{Typeset`show$$, Typeset`bookmarkMode$$},
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellChangeTimes->{
+  3.9228382347164106`*^9, {3.9228383136733065`*^9, 3.9228383382731147`*^9}, 
+   3.922838476683444*^9, 3.922838585811922*^9, 3.922838627707345*^9, 
+   3.922897954023245*^9, 3.922898798613558*^9, 3.9228993262154636`*^9, {
+   3.9326892566864505`*^9, 3.9326892575222178`*^9}, 3.932689329876213*^9},
+ CellLabel->"Out[14]=",ExpressionUUID->"c1d5a51b-d0ee-43f2-a14b-842c95658a4c"]
+}, Open  ]]
+},
+WindowSize->{1264, 661},
+WindowMargins->{{-8, Automatic}, {Automatic, 0}},
+Magnification:>0.9 Inherited,
+FrontEndVersion->"12.0 for Microsoft Windows (64-bit) (April 8, 2019)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 31738, 742, 1797, "Code",ExpressionUUID->"06187f7e-f074-483b-9885-4727d7a288fa"],
+Cell[32321, 766, 16622, 305, 464, "Output",ExpressionUUID->"e032a1c6-b710-459d-9660-511a6a1bc9a8"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[48980, 1076, 150, 2, 26, "Input",ExpressionUUID->"abba0b2a-c3c8-4d7e-9ab4-4489597b4eed"],
+Cell[49133, 1080, 200, 3, 30, "Output",ExpressionUUID->"61beffe8-bc4d-4af4-9a0e-b746f58830ee"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[49370, 1088, 5899, 151, 386, "Code",ExpressionUUID->"c1be4070-29f8-485f-8a98-4d8c7fdae24b"],
+Cell[55272, 1241, 3157, 63, 455, "Output",ExpressionUUID->"c1d5a51b-d0ee-43f2-a14b-842c95658a4c"]
+}, Open  ]]
+}
+]
+*)
+
